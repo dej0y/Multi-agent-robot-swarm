@@ -183,37 +183,3 @@ Open the LocalHost Link provided in the terminal.
     ~/catkin_ws/src/turtlebot_ddpg/scripts/fd_replay/play_human_data
 ```
 
-# Resolving Errors
-
-If you encounter the sudoers error:
-
-    username is not in the sudoers file. This incident will be reported.  
-
-Follow these steps to resolve it:
-
-Switch to the root user by typing the following command in the terminal:
-
-    su 
-
-You will be prompted to enter the root password.
-
-Open the sudoers file for editing by executing:
-
-    visudo -f /etc/sudoers  
-
-Scroll to the end of the file and add the following line:
-
-    user_name ALL=(ALL) ALL  
-
-Replace user_name with your actual username.
-
-Save and exit the editor by pressing Ctrl+X, followed by Y, and then Enter.
-
-Switch back to your user account with the command:
-
-    su user_name  
-
-Verify the fix by running a command with sudo (e.g., sudo apt update).
-
-This modification grants the user sudo privileges, enabling administrative tasks without encountering the error.
-

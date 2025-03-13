@@ -38,7 +38,19 @@ We have provided the following files/folders in the code folder
 
 ## Video Demonstration
 
-To experience the capabilities of the centralized swarm navigation system, including dynamic path planning, real-time obstacle avoidance, and seamless coordination, explore the video demonstration available in the **videos** folder.
+To experience the capabilities of the centralized swarm navigation system, including dynamic path planning, real-time obstacle avoidance, and seamless coordination, explore the video demonstrations available below:
+
+### [Video 1: Dynamic Swarm Navigation Overview](https://youtu.be/78zE4rJ4cDY)
+A general overview of how the swarm operates, highlighting key features such as centralized control, real-time decision making, and efficient navigation in a dynamic environment.
+
+### [Video 2: Obstacle Avoidance in Action](https://youtu.be/fuIKSx9zPPc)
+Watch how the robots adapt to real-time obstacles and effectively avoid them using the Timed Elastic Band (TEB) local planner and reinforcement learning-based strategies.
+
+### [Video 3: Exploration and Path Planning with DDPG](https://youtu.be/MFlaDMs3FBI)
+This video demonstrates the usage of the Accelerated Deep Deterministic Policy Gradient (DDPG) for exploration and path planning under dynamic conditions.
+
+### [Video 4: DDPG Training](https://youtu.be/fHyaJAUsxMM)
+The DDPG algorithm being trained to optimize decision-making and path planning in dynamic environments.
 
 ---
 

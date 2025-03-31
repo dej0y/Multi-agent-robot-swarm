@@ -52,6 +52,15 @@ This video demonstrates the usage of the Accelerated Deep Deterministic Policy G
 ### [Video 4: DDPG Training](https://youtu.be/fHyaJAUsxMM)
 The DDPG algorithm being trained to optimize decision-making and path planning in dynamic environments.
 
+### [Video 5: Frontier exploration-based navigation of a swarm of robots in dynamic environment](https://youtu.be/MU8Pb9cezhg)
+The video demonstrates how frontier exploration is used to navigate a swarm of robots through a dynamic environment, enabling efficient exploration and mapping.
+
+### [Video 6: Frontier exploration-based navigation of a larger swarm of robots in a larger dynamic environment](https://youtu.be/mjY70b-c7WM)
+This video demonstrates a larger swarm of robots utilizing frontier exploration to navigate a more complex, dynamic environment, highlighting scalability and performance in intricate settings.
+
+### [Video 7: Chatbot Interface with LLM](https://youtu.be/b1DNU8ecjX0)
+The video demonstrates the integration of a chatbot interface powered by a Large Language Model (LLM).
+
 ---
 
 ## Overview

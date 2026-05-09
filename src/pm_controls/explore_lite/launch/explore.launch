@@ -1,0 +1,117 @@
+<launch>
+  <arg name="num_bots" default="3"/>
+
+  <!-- Loop through each bot based on the num_bots argument -->
+  <group if="$(eval arg('num_bots') >= 1)" ns="/bot1">
+      <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+        <param name="robot_base_frame" value="bot1/base_footprint"/>
+        <param name="costmap_topic" value="/bot1/map"/>
+        <param name="costmap_updates_topic" value="/bot1/map_updates"/>
+        <param name="visualize" value="true"/>
+        <param name="planner_frequency" value="0.33"/>
+        <param name="progress_timeout" value="30.0"/>
+        <param name="potential_scale" value="3.0"/>
+        <param name="orientation_scale" value="0.0"/>
+        <param name="gain_scale" value="1.0"/>
+        <param name="transform_tolerance" value="0.3"/>
+        <param name="min_frontier_size" value="0.75"/>
+      </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 2)" ns="/bot2">
+      <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+        <param name="robot_base_frame" value="bot2/base_footprint"/>
+        <param name="costmap_topic" value="/bot2/map"/>
+        <param name="costmap_updates_topic" value="/bot2/map_updates"/>
+        <param name="visualize" value="true"/>
+        <param name="planner_frequency" value="0.33"/>
+        <param name="progress_timeout" value="30.0"/>
+        <param name="potential_scale" value="3.0"/>
+        <param name="orientation_scale" value="0.0"/>
+        <param name="gain_scale" value="1.0"/>
+        <param name="transform_tolerance" value="0.3"/>
+        <param name="min_frontier_size" value="0.75"/>
+      </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 3)" ns="/bot3">
+      <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+        <param name="robot_base_frame" value="bot3/base_footprint"/>
+        <param name="costmap_topic" value="/bot3/map"/>
+        <param name="costmap_updates_topic" value="/bot3/map_updates"/>
+        <param name="visualize" value="true"/>
+        <param name="planner_frequency" value="0.33"/>
+        <param name="progress_timeout" value="30.0"/>
+        <param name="potential_scale" value="3.0"/>
+        <param name="orientation_scale" value="0.0"/>
+        <param name="gain_scale" value="1.0"/>
+        <param name="transform_tolerance" value="0.3"/>
+        <param name="min_frontier_size" value="0.75"/>
+      </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 4)" ns="/bot4">
+      <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+        <param name="robot_base_frame" value="bot4/base_footprint"/>
+        <param name="costmap_topic" value="/bot4/map"/>
+        <param name="costmap_updates_topic" value="/bot4/map_updates"/>
+        <param name="visualize" value="true"/>
+        <param name="planner_frequency" value="0.33"/>
+        <param name="progress_timeout" value="30.0"/>
+        <param name="potential_scale" value="3.0"/>
+        <param name="orientation_scale" value="0.0"/>
+        <param name="gain_scale" value="1.0"/>
+        <param name="transform_tolerance" value="0.3"/>
+        <param name="min_frontier_size" value="0.75"/>
+      </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 5)" ns="/bot5">
+      <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+        <param name="robot_base_frame" value="bot5/base_footprint"/>
+        <param name="costmap_topic" value="/bot5/map"/>
+        <param name="costmap_updates_topic" value="/bot5/map_updates"/>
+        <param name="visualize" value="true"/>
+        <param name="planner_frequency" value="0.33"/>
+        <param name="progress_timeout" value="30.0"/>
+        <param name="potential_scale" value="3.0"/>
+        <param name="orientation_scale" value="0.0"/>
+        <param name="gain_scale" value="1.0"/>
+        <param name="transform_tolerance" value="0.3"/>
+        <param name="min_frontier_size" value="0.75"/>
+      </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 6)" ns="/bot6">
+      <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+        <param name="robot_base_frame" value="bot6/base_footprint"/>
+        <param name="costmap_topic" value="/bot6/map"/>
+        <param name="costmap_updates_topic" value="/bot6/map_updates"/>
+        <param name="visualize" value="true"/>
+        <param name="planner_frequency" value="0.33"/>
+        <param name="progress_timeout" value="30.0"/>
+        <param name="potential_scale" value="3.0"/>
+        <param name="orientation_scale" value="0.0"/>
+        <param name="gain_scale" value="1.0"/>
+        <param name="transform_tolerance" value="0.3"/>
+        <param name="min_frontier_size" value="0.75"/>
+      </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 7)" ns="/bot7">
+      <node pkg="explore_lite" type="explore" respawn="false" name="explore" output="screen">
+        <param name="robot_base_frame" value="bot7/base_footprint"/>
+        <param name="costmap_topic" value="/bot7/map"/>
+        <param name="costmap_updates_topic" value="/bot7/map_updates"/>
+        <param name="visualize" value="true"/>
+        <param name="planner_frequency" value="0.33"/>
+        <param name="progress_timeout" value="30.0"/>
+        <param name="potential_scale" value="3.0"/>
+        <param name="orientation_scale" value="0.0"/>
+        <param name="gain_scale" value="1.0"/>
+        <param name="transform_tolerance" value="0.3"/>
+        <param name="min_frontier_size" value="0.75"/>
+      </node>
+  </group>
+
+</launch>

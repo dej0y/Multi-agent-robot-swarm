@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Launch the global_frontier node -->
+    <node 
+        pkg="remain_package" 
+        type="global_frontier.py" 
+        name="global_frontier_node" 
+        output="screen">
+        <!-- Parameters can be passed here if needed -->
+        <!-- Example: <param name="param_name" value="param_value"/> -->
+    </node>
+
+</launch>

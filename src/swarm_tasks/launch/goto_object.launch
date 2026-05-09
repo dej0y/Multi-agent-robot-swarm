@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="bot" default="bot1"/>
+  <arg name="loc_x" default="0"/>
+  <arg name="loc_y" default="0"/>
+
+  <node name="goto_object" pkg="swarm_tasks" type="goto_object.py" output="screen">
+    <param name="bot" value="$(arg bot)"/>
+    <param name="loc_x" value="$(arg loc_x)"/>
+    <param name="loc_y" value="$(arg loc_y)"/>
+  </node>
+
+</launch>

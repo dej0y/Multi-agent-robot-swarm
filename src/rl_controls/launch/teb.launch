@@ -1,0 +1,75 @@
+<launch>
+  <arg name="num_bots" default="4"/>
+  
+  <group if="$(eval arg('num_bots') >= 1)" ns="bot1">
+    <rosparam file="$(find custom_planner_teb)/config/move_base_params_bot1.yaml" command="load" ns="move_base" />
+    <rosparam file="$(find custom_planner_teb)/config/teb_local_planner_params_bot1.yaml" command="load" ns="move_base" />
+
+    <node pkg="move_base" type="move_base" name="move_base" output="screen">
+      <param name="base_global_planner" value="navfn/NavfnROS" />
+      <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 2)" ns="bot2">
+    <rosparam file="$(find custom_planner_teb)/config/move_base_params_bot2.yaml" command="load" ns="move_base" />
+    <rosparam file="$(find custom_planner_teb)/config/teb_local_planner_params_bot2.yaml" command="load" ns="move_base" />
+
+    <node pkg="move_base" type="move_base" name="move_base" output="screen">
+      <param name="base_global_planner" value="navfn/NavfnROS" />
+      <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 3)" ns="bot3">
+    <rosparam file="$(find custom_planner_teb)/config/move_base_params_bot3.yaml" command="load" ns="move_base" />
+    <rosparam file="$(find custom_planner_teb)/config/teb_local_planner_params_bot3.yaml" command="load" ns="move_base" />
+
+    <node pkg="move_base" type="move_base" name="move_base" output="screen">
+      <param name="base_global_planner" value="navfn/NavfnROS" />
+      <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 4)" ns="bot4">
+    <rosparam file="$(find custom_planner_teb)/config/move_base_params_bot4.yaml" command="load" ns="move_base" />
+    <rosparam file="$(find custom_planner_teb)/config/teb_local_planner_params_bot4.yaml" command="load" ns="move_base" />
+
+    <node pkg="move_base" type="move_base" name="move_base" output="screen">
+      <param name="base_global_planner" value="navfn/NavfnROS" />
+      <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 5)" ns="bot5">
+    <rosparam file="$(find custom_planner_teb)/config/move_base_params_bot5.yaml" command="load" ns="move_base" />
+    <rosparam file="$(find custom_planner_teb)/config/teb_local_planner_params_bot5.yaml" command="load" ns="move_base" />
+
+    <node pkg="move_base" type="move_base" name="move_base" output="screen">
+      <param name="base_global_planner" value="navfn/NavfnROS" />
+      <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 6)" ns="bot6">
+    <rosparam file="$(find custom_planner_teb)/config/move_base_params_bot6.yaml" command="load" ns="move_base" />
+    <rosparam file="$(find custom_planner_teb)/config/teb_local_planner_params_bot6.yaml" command="load" ns="move_base" />
+
+    <node pkg="move_base" type="move_base" name="move_base" output="screen">
+      <param name="base_global_planner" value="navfn/NavfnROS" />
+      <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    </node>
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 7)" ns="bot7">
+    <rosparam file="$(find custom_planner_teb)/config/move_base_params_bot7.yaml" command="load" ns="move_base" />
+    <rosparam file="$(find custom_planner_teb)/config/teb_local_planner_params_bot7.yaml" command="load" ns="move_base" />
+
+    <node pkg="move_base" type="move_base" name="move_base" output="screen">
+      <param name="base_global_planner" value="navfn/NavfnROS" />
+      <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    </node>
+  </group>
+
+
+</launch>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="bot_num" default="1"/>
+  <arg name="model_name" default="mars-small128.pb"/>
+  <arg name="deep_track_topic" default="/deep_track"/>
+  <arg name="odom_track_topic" default="/bot$(arg bot_num)/yolo_odom"/>
+  <arg name="yolo_image_topic" default="/bot$(arg bot_num)/yolo_image"/>
+  <arg name="yolo_depth_topic" default="/bot$(arg bot_num)/yolo_depth"/>
+  <arg name="yolo_result_topic" default="/bot$(arg bot_num)/yolo_result"/>
+
+  <node name="deepsort_node$(arg bot_num)" pkg="deepsort_ros" type="track_deep.py" output="screen">
+    <param name="bot_num" value="$(arg bot_num)"/>
+    <param name="model_name" value="$(arg model_name)"/>
+    <param name="deep_track_topic" value="$(arg deep_track_topic)"/>
+    <param name="odom_track_topic" value="$(arg odom_track_topic)"/>
+    <param name="yolo_image_topic" value="$(arg yolo_image_topic)"/>
+    <param name="yolo_depth_topic" value="$(arg yolo_depth_topic)"/>
+    <param name="yolo_result_topic" value="$(arg yolo_result_topic)"/>
+  </node>
+</launch>

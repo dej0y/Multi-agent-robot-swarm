@@ -1,0 +1,241 @@
+<launch>
+  <arg name="model" default="waffle_pi" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="move_forward_only" default="false"/>
+  <arg name="num_bots" default="4" doc="Number of bots for map merging"/>
+   <!-- Define robot names -->
+  <arg name="bot1" default="bot1"/>
+  <arg name="bot2" default="bot2"/>
+  <arg name="bot3" default="bot3"/>
+  <arg name="bot4" default="bot4"/>
+  <arg name="bot5" default="bot5"/>
+  <arg name="bot6" default="bot6"/>
+  <arg name="bot7" default="bot7"/>
+  <!-- Define robots and their initial positions -->
+  <arg name="bot1_x_pos" default="-5.0"/>
+  <arg name="bot1_y_pos" default="-2.5"/>
+  <arg name="bot1_z_pos" default="0.01"/>
+  <arg name="bot1_yaw"   default="0"/>
+
+  <arg name="bot2_x_pos" default="1.0"/>
+  <arg name="bot2_y_pos" default="1.0"/>
+  <arg name="bot2_z_pos" default="0.01"/>
+  <arg name="bot2_yaw"   default="0"/>
+
+  <arg name="bot3_x_pos" default="3.0"/>
+  <arg name="bot3_y_pos" default="1.0"/>
+  <arg name="bot3_z_pos" default="0.01"/>
+  <arg name="bot3_yaw"   default="0"/>
+
+  <arg name="bot4_x_pos" default="4.0"/>
+  <arg name="bot4_y_pos" default="-2.5"/>
+  <arg name="bot4_z_pos" default="0.01"/>
+  <arg name="bot4_yaw"   default="0"/>
+
+  <arg name="bot5_x_pos" default="-1.0"/>
+  <arg name="bot5_y_pos" default="4.0"/>
+  <arg name="bot5_z_pos" default="0.01"/>
+  <arg name="bot5_yaw"   default="0"/>
+
+  <arg name="bot6_x_pos" default="-3.0"/>
+  <arg name="bot6_y_pos" default="2.0"/>
+  <arg name="bot6_z_pos" default="0.01"/>
+  <arg name="bot6_yaw"   default="0"/>
+
+  <arg name="bot7_x_pos" default="2.0"/>
+  <arg name="bot7_y_pos" default="-4.0"/>
+  <arg name="bot7_z_pos" default="0.01"/>
+  <arg name="bot7_yaw"   default="0"/>
+
+
+
+<!-- big world  -->
+  <!-- <arg name="bot1_x_pos" default="5.0"/>
+  <arg name="bot1_y_pos" default="2.0"/>
+  <arg name="bot1_z_pos" default="0.01"/>
+  <arg name="bot1_yaw"   default="0"/>
+
+  <arg name="bot2_x_pos" default="-11.0"/>
+  <arg name="bot2_y_pos" default="5.0"/>
+  <arg name="bot2_z_pos" default="0.01"/>
+  <arg name="bot2_yaw"   default="0"/>
+
+  <arg name="bot3_x_pos" default="-3.0"/>
+  <arg name="bot3_y_pos" default="-7.0"/>
+  <arg name="bot3_z_pos" default="0.01"/>
+  <arg name="bot3_yaw"   default="0"/>
+
+  <arg name="bot4_x_pos" default="-5.0"/>
+  <arg name="bot4_y_pos" default="-12"/>
+  <arg name="bot4_z_pos" default="0.01"/>
+  <arg name="bot4_yaw"   default="0"/>
+
+  <arg name="bot5_x_pos" default="6.0"/>
+  <arg name="bot5_y_pos" default="14.5"/>
+  <arg name="bot5_z_pos" default="0.01"/>
+  <arg name="bot5_yaw"   default="0"/>
+
+  <arg name="bot6_x_pos" default="6.0"/>
+  <arg name="bot6_y_pos" default="-17.0"/>
+  <arg name="bot6_z_pos" default="0.01"/>
+  <arg name="bot6_yaw"   default="0"/>
+
+  <arg name="bot7_x_pos" default="-15.0"/>
+  <arg name="bot7_y_pos" default="-20.0"/>
+  <arg name="bot7_z_pos" default="0.01"/>
+  <arg name="bot7_yaw"   default="0"/> -->
+
+
+
+
+  <!-- Launch Map Merge Nodes Conditionally -->
+  <group if="$(eval int(num_bots) >= 1)" ns="/bot1/map_merge">
+    <param name="init_pose_x" value="$(arg bot1_x_pos)"/>
+    <param name="init_pose_y" value="$(arg bot1_y_pos)"/>
+    <param name="init_pose_z" value="$(arg bot1_z_pos)"/>
+    <param name="init_pose_yaw" value="$(arg bot1_yaw)"/>
+  </group>
+  <group if="$(eval int(num_bots) >= 1)" ns="bot1">
+    <arg name="namespace" default="bot1"/>
+
+    <node pkg="gmapping" type="slam_gmapping" name="bot1_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node>
+  </group>
+
+  <group if="$(eval int(num_bots) >= 2)" ns="/bot2/map_merge">
+    <param name="init_pose_x" value="$(arg bot2_x_pos)"/>
+    <param name="init_pose_y" value="$(arg bot2_y_pos)"/>
+    <param name="init_pose_z" value="$(arg bot2_z_pos)"/>
+    <param name="init_pose_yaw" value="$(arg bot2_yaw)"/>
+  </group>
+  <group if="$(eval int(num_bots) >= 2)" ns="bot2">
+
+    <arg name="namespace" default="bot2"/>
+
+    <node pkg="gmapping" type="slam_gmapping" name="bot2_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node>
+  </group>
+
+  <group if="$(eval int(num_bots) >= 3)" ns="/bot3/map_merge">
+    <param name="init_pose_x" value="$(arg bot3_x_pos)"/>
+    <param name="init_pose_y" value="$(arg bot3_y_pos)"/>
+    <param name="init_pose_z" value="$(arg bot3_z_pos)"/>
+    <param name="init_pose_yaw" value="$(arg bot3_yaw)"/>
+
+  </group>
+  <group if="$(eval int(num_bots) >= 3)" ns="bot3">
+    <arg name="namespace" default="bot3"/>
+
+    <node pkg="gmapping" type="slam_gmapping" name="bot3_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node>
+  </group>
+
+  <group if="$(eval int(num_bots) >= 4)" ns="/bot4/map_merge">
+    <param name="init_pose_x" value="$(arg bot4_x_pos)"/>
+    <param name="init_pose_y" value="$(arg bot4_y_pos)"/>
+    <param name="init_pose_z" value="$(arg bot4_z_pos)"/>
+    <param name="init_pose_yaw" value="$(arg bot4_yaw)"/>
+
+  </group>
+  <group if="$(eval int(num_bots) >= 4)" ns="bot4">
+
+    <arg name="namespace" default="bot4"/>
+
+    <node pkg="gmapping" type="slam_gmapping" name="bot4_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node>
+  </group>
+
+  <group if="$(eval int(num_bots) >= 5)" ns="/bot5/map_merge">
+    <param name="init_pose_x" value="$(arg bot5_x_pos)"/>
+    <param name="init_pose_y" value="$(arg bot5_y_pos)"/>
+    <param name="init_pose_z" value="$(arg bot5_z_pos)"/>
+    <param name="init_pose_yaw" value="$(arg bot5_yaw)"/>
+
+  </group>
+  <group if="$(eval int(num_bots) >= 5)" ns="bot5">
+
+    <arg name="namespace" default="bot5"/>
+
+    <node pkg="gmapping" type="slam_gmapping" name="bot5_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node>
+  </group>
+
+  <group if="$(eval int(num_bots) >= 6)" ns="/bot6/map_merge">
+    <param name="init_pose_x" value="$(arg bot6_x_pos)"/>
+    <param name="init_pose_y" value="$(arg bot6_y_pos)"/>
+    <param name="init_pose_z" value="$(arg bot6_z_pos)"/>
+    <param name="init_pose_yaw" value="$(arg bot6_yaw)"/>
+
+  </group>
+  <group if="$(eval int(num_bots) >= 6)" ns="bot6">
+
+    <arg name="namespace" default="bot6" />
+
+    <node pkg="gmapping" type="slam_gmapping" name="bot6_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node>
+  </group>
+
+  <group if="$(eval int(num_bots) >= 7)" ns="/bot7/map_merge">
+    <param name="init_pose_x" value="$(arg bot7_x_pos)"/>
+    <param name="init_pose_y" value="$(arg bot7_y_pos)"/>
+    <param name="init_pose_z" value="$(arg bot7_z_pos)"/>
+    <param name="init_pose_yaw" value="$(arg bot7_yaw)"/>
+
+  </group>
+  <group if="$(eval int(num_bots) >= 7)" ns="bot7">
+
+    <arg name="namespace" default="bot7"/>
+
+    <node pkg="gmapping" type="slam_gmapping" name="bot7_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node>
+  </group>
+
+  <!-- Launch the Map Merge Node -->
+  <!-- Launch map_merge node -->
+  <node pkg="multirobot_map_merge" type="map_merge" respawn="false" name="map_merge" output="screen">
+    <param name="robot_map_topic" value="/map"/>
+    <param name="robot_namespace" value="bot"/>
+    <param name="merged_map_topic" value="/merged_map"/>
+    <param name="world_frame" value="world"/>
+    <param name="known_init_poses" value="true"/>
+    <param name="merging_rate" value="1.0"/>
+    <param name="discovery_rate" value="0.05"/>
+    <param name="estimation_rate" value="0.5"/>
+    <param name="estimation_confidence" value="1.0"/>
+  </node>
+
+</launch>

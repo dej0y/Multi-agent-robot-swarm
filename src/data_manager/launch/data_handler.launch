@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="expiry_time" default="1000"/>
+  <arg name="refresh_rate" default="1"/>
+  <arg name="map_topic" default="/merged_map"/>
+  <arg name="tracker_topic" default="/deep_track"/>
+
+  <node name="whole_handler" pkg="data_manager" type="whole_handler.py" output="screen">
+    <param name="refresh_rate" value="$(arg refresh_rate)"/>
+  </node>
+
+  <node name="robot_handler" pkg="data_manager" type="robot_handler.py" output="screen">
+    <param name="refresh_rate" value="$(arg refresh_rate)"/>
+  </node>
+
+  <node name="map_handler" pkg="data_manager" type="mapsaver.py" output="screen">
+    <param name="map_topic" value="$(arg map_topic)"/>
+  </node>
+
+  <node name="object_handler" pkg="data_manager" type="object_handler.py" output="screen">
+    <param name="expiry_time" value="$(arg expiry_time)"/>
+    <param name="refresh_rate" value="$(arg refresh_rate)"/>
+    <param name="tracker_topic" value="$(arg tracker_topic)"/>
+  </node>
+
+</launch>

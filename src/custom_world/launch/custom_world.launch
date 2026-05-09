@@ -1,0 +1,375 @@
+<?xml version="1.0"?>
+<launch>
+
+  <param name="num_bots" value="4"/>
+  
+  <!-- Arguments -->
+   <arg name="model" default="burger" doc="model type [burger, waffle, waffle_pi]"/>
+  <!-- <arg name="world_name" default="$(find custom_world)/worlds/fina.world"/> -->
+  <arg name="world_name" default="$(find custom_world)/worlds/big_office.world"/>
+  <arg name="laser_visual" default="true"/>
+  <arg name="imu_visual" default="true"/>
+  <arg name="camera_visual" default="false"/>
+  <arg name="gpu" default="false"/>
+  <arg name="move_forward_only" default="false"/>
+  <!-- <arg name="move_forward_only" default="false"/> -->
+  <!-- <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/> -->
+
+  <!-- Start Gazebo with the specified world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+
+<!-- small warehouse  -->
+  <!-- <arg name="bot1_x_pos" default="-7.6"/>
+  <arg name="bot1_y_pos" default="8.3"/>
+  <arg name="bot1_z_pos" default="0.01"/>
+  <arg name="bot1_yaw"   default="0.0"/>
+
+  <arg name="bot2_x_pos" default="8"/>
+  <arg name="bot2_y_pos" default="-13"/>
+  <arg name="bot2_z_pos" default="0.01"/>
+  <arg name="bot2_yaw"   default="1.58"/>
+
+  <arg name="bot3_x_pos" default="8"/>
+  <arg name="bot3_y_pos" default="-20"/>
+  <arg name="bot3_z_pos" default="0.01"/>
+  <arg name="bot3_yaw"   default="1.3"/>
+
+  <arg name="bot4_x_pos" default="-20"/>
+  <arg name="bot4_y_pos" default="14"/>
+  <arg name="bot4_z_pos" default="0.01"/>
+  <arg name="bot4_yaw"   default="-0.6"/>
+
+  <arg name="bot5_x_pos" default="-1.0"/>
+  <arg name="bot5_y_pos" default="4.0"/>
+  <arg name="bot5_z_pos" default="0.01"/>
+  <arg name="bot5_yaw"   default="0"/>
+
+  <arg name="bot6_x_pos" default="-3.0"/>
+  <arg name="bot6_y_pos" default="2.0"/>
+  <arg name="bot6_z_pos" default="0.01"/>
+  <arg name="bot6_yaw"   default="0"/>
+
+  <arg name="bot7_x_pos" default="2.0"/>
+  <arg name="bot7_y_pos" default="-4.0"/>
+  <arg name="bot7_z_pos" default="0.01"/>
+  <arg name="bot7_yaw"   default="0"/> -->
+
+
+<!-- big office  -->
+  <arg name="bot1_x_pos" default="5.0"/>
+  <arg name="bot1_y_pos" default="2.0"/>
+  <arg name="bot1_z_pos" default="0.01"/>
+  <arg name="bot1_yaw"   default="0"/>
+
+  <arg name="bot2_x_pos" default="-11.0"/>
+  <arg name="bot2_y_pos" default="5.0"/>
+  <arg name="bot2_z_pos" default="0.01"/>
+  <arg name="bot2_yaw"   default="0"/>
+
+  <arg name="bot3_x_pos" default="-3.0"/>
+  <arg name="bot3_y_pos" default="-7.0"/>
+  <arg name="bot3_z_pos" default="0.01"/>
+  <arg name="bot3_yaw"   default="0"/>
+
+  <arg name="bot4_x_pos" default="-5.0"/>
+  <arg name="bot4_y_pos" default="-12"/>
+  <arg name="bot4_z_pos" default="0.01"/>
+  <arg name="bot4_yaw"   default="0"/>
+
+  <arg name="bot5_x_pos" default="6.0"/>
+  <arg name="bot5_y_pos" default="14.5"/>
+  <arg name="bot5_z_pos" default="0.01"/>
+  <arg name="bot5_yaw"   default="0"/>
+
+  <arg name="bot6_x_pos" default="6.0"/>
+  <arg name="bot6_y_pos" default="-17.0"/>
+  <arg name="bot6_z_pos" default="0.01"/>
+  <arg name="bot6_yaw"   default="0"/>
+
+  <arg name="bot7_x_pos" default="-15.0"/>
+  <arg name="bot7_y_pos" default="-20.0"/>
+  <arg name="bot7_z_pos" default="0.01"/>
+  <arg name="bot7_yaw"   default="0"/>
+
+
+  <group if="$(eval arg('num_bots') >= 1)" ns="bot1">
+    
+    <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro namespace:=/bot1 laser_visual:=$(arg laser_visual) imu_visual:=$(arg imu_visual) camera_visual:=$(arg camera_visual)" />
+
+    <node name="spawn_bot1" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -model bot1 -x $(arg bot1_x_pos) -y $(arg bot1_y_pos) -z $(arg bot1_z_pos) -Y $(arg bot1_yaw) -param robot_description" />
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="bot1" />
+    </node>
+
+    <arg name="namespace" value="bot1" /> <!--change for the next bots-->
+     <!-- Conversion of 3D data to 2D laser scan -->
+    <node pkg="custom_world" type="point_cloud_to_laser_scan.py" name="point_cloud_to_laser_scan" output="screen">
+        <param name="namespace" value="$(arg namespace)" />
+    </node>
+   <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg namespace)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg namespace)/map 20"/>
+<!-- gmapping for turtlebot 1 -->
+    <!-- <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node> -->
+<!-- move base for turtlebot 1 -->
+     <!-- <include file="$(find custom_world)/launch/includes/move_base.launch">
+      <arg name="model" value="$(arg model)" />
+      <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+      <arg name="cmd_vel_topic" value="/$(arg namespace)/cmd_vel"/>
+      <arg name="namespace" value="$(arg namespace)"/>
+    </include> -->
+
+
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 2)" ns="bot2">
+    
+    <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro namespace:=/bot2 laser_visual:=$(arg laser_visual) imu_visual:=$(arg imu_visual) camera_visual:=$(arg camera_visual)" />
+
+    <node name="spawn_bot2" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -model bot2 -x $(arg bot2_x_pos) -y $(arg bot2_y_pos) -z $(arg bot2_z_pos) -Y $(arg bot2_yaw) -param robot_description" />
+
+    
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="bot2" />
+    </node>
+
+
+    <arg name="namespace" value="bot2" /> <!--change for the next bots-->
+    <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg namespace)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg namespace)/map 20"/>
+
+     <!-- Conversion of 3D data to 2D laser scan -->
+    <node pkg="custom_world" type="point_cloud_to_laser_scan.py" name="point_cloud_to_laser_scan" output="screen">
+        <param name="namespace" value="$(arg namespace)" />
+    </node>
+
+<!-- gmapping for turtlebot 1 -->
+    <!-- <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node> -->
+<!-- move base for turtlebot 1 -->
+     <!-- <include file="$(find custom_world)/launch/includes/move_base.launch">
+      <arg name="model" value="$(arg model)" />
+      <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+      <arg name="cmd_vel_topic" value="/$(arg namespace)/cmd_vel"/>
+      <arg name="namespace" value="$(arg namespace)"/>
+    </include>  -->
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 3)" ns="bot3">
+
+    <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro namespace:=/bot3 laser_visual:=$(arg laser_visual) imu_visual:=$(arg imu_visual) camera_visual:=$(arg camera_visual)" />
+
+    <node name="spawn_bot3" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -model bot3 -x $(arg bot3_x_pos) -y $(arg bot3_y_pos) -z $(arg bot3_z_pos) -Y $(arg bot3_yaw) -param robot_description" />
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="bot3" />
+    </node>
+
+
+    <arg name="namespace" value="bot3" /> <!--change for the next bots-->
+    <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg namespace)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg namespace)/map 20"/>
+    
+     <!-- Conversion of 3D data to 2D laser scan -->
+    <node pkg="custom_world" type="point_cloud_to_laser_scan.py" name="point_cloud_to_laser_scan" output="screen">
+        <param name="namespace" value="$(arg namespace)" />
+    </node>
+
+<!-- gmapping for turtlebot 1 -->
+    <!-- <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node> -->
+<!-- move base for turtlebot 1 -->
+     <!-- <include file="$(find custom_world)/launch/includes/move_base.launch">
+      <arg name="model" value="$(arg model)" />
+      <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+      <arg name="cmd_vel_topic" value="/$(arg namespace)/cmd_vel"/>
+      <arg name="namespace" value="$(arg namespace)"/>
+    </include> -->
+
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 4)" ns="bot4">
+    
+    <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro namespace:=/bot4 laser_visual:=$(arg laser_visual) imu_visual:=$(arg imu_visual) camera_visual:=$(arg camera_visual)" />
+
+
+    <node name="spawn_bot4" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -model bot4 -x $(arg bot4_x_pos) -y $(arg bot4_y_pos) -z $(arg bot4_z_pos) -Y $(arg bot4_yaw) -param robot_description" />
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="bot4" />
+    </node>
+
+
+    <arg name="namespace" default="bot4" /> <!--change for the next bots-->
+    <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg namespace)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg namespace)/map 20"/>
+    
+     <!-- Conversion of 3D data to 2D laser scan -->
+    <node pkg="custom_world" type="point_cloud_to_laser_scan.py" name="point_cloud_to_laser_scan" output="screen">
+        <param name="namespace" value="$(arg namespace)" />
+    </node>
+
+<!-- gmapping for turtlebot 1 -->
+    <!-- <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node> -->
+<!-- move base for turtlebot 1 -->
+     <!-- <include file="$(find custom_world)/launch/includes/move_base.launch">
+      <arg name="model" value="$(arg model)" />
+      <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+      <arg name="cmd_vel_topic" value="/$(arg namespace)/cmd_vel"/>
+      <arg name="namespace" value="$(arg namespace)"/>
+    </include> -->
+
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 5)" ns="bot5">
+    
+   <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro namespace:=/bot5 laser_visual:=$(arg laser_visual) imu_visual:=$(arg imu_visual) camera_visual:=$(arg camera_visual)" />
+
+
+
+    <node name="spawn_bot5" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -model bot5 -x $(arg bot5_x_pos) -y $(arg bot5_y_pos) -z $(arg bot5_z_pos) -Y $(arg bot5_yaw) -param robot_description" />
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="bot5" />
+    </node>
+
+
+    <arg name="namespace" default="bot5" /> <!--change for the next bots-->
+    <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg namespace)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg namespace)/map 20"/>
+    
+     <!-- Conversion of 3D data to 2D laser scan -->
+    <node pkg="custom_world" type="point_cloud_to_laser_scan.py" name="point_cloud_to_laser_scan" output="screen">
+        <param name="namespace" value="$(arg namespace)" />
+    </node>
+
+<!-- gmapping for turtlebot 1 -->
+    <!-- <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node> -->
+<!-- move base for turtlebot 1 -->
+     <!-- <include file="$(find custom_world)/launch/includes/move_base.launch">
+      <arg name="model" value="$(arg model)" />
+      <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+      <arg name="cmd_vel_topic" value="/$(arg namespace)/cmd_vel"/>
+      <arg name="namespace" value="$(arg namespace)"/>
+    </include> -->
+
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 6)" ns="bot6">
+    
+    <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro namespace:=/bot6 laser_visual:=$(arg laser_visual) imu_visual:=$(arg imu_visual) camera_visual:=$(arg camera_visual)" />
+
+
+    <node name="spawn_bot6" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -model bot6 -x $(arg bot6_x_pos) -y $(arg bot6_y_pos) -z $(arg bot6_z_pos) -Y $(arg bot6_yaw) -param robot_description" />
+
+   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="bot6" />
+    </node>
+
+
+    <arg name="namespace" default="bot6" /> <!--change for the next bots-->
+    <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg namespace)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg namespace)/map 20"/>
+    
+     <!-- Conversion of 3D data to 2D laser scan -->
+    <node pkg="custom_world" type="point_cloud_to_laser_scan.py" name="point_cloud_to_laser_scan" output="screen">
+        <param name="namespace" value="$(arg namespace)" />
+    </node>
+
+<!-- gmapping for turtlebot 1 -->
+    <!-- <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node> -->
+<!-- move base for turtlebot 1 -->
+     <!-- <include file="$(find custom_world)/launch/includes/move_base.launch">
+      <arg name="model" value="$(arg model)" />
+      <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+      <arg name="cmd_vel_topic" value="/$(arg namespace)/cmd_vel"/>
+      <arg name="namespace" value="$(arg namespace)"/>
+    </include> -->
+  </group>
+
+  <group if="$(eval arg('num_bots') >= 7)" ns="bot7">
+    
+    <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro namespace:=/bot7 laser_visual:=$(arg laser_visual) imu_visual:=$(arg imu_visual) camera_visual:=$(arg camera_visual)" />
+
+
+    <node name="spawn_bot7" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -model bot7 -x $(arg bot7_x_pos) -y $(arg bot7_y_pos) -z $(arg bot7_z_pos) -Y $(arg bot7_yaw) -param robot_description" />
+<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="bot7" />
+    </node>
+
+
+    <arg name="namespace" default="bot7" /> <!--change for the next bots-->
+    <node pkg="tf" type="static_transform_publisher" name="world_to_$(arg namespace)_tf_broadcaster"  args="0 0 0 0 0 0 /map /$(arg namespace)/map 20"/>
+    
+     <!-- Conversion of 3D data to 2D laser scan -->
+    <node pkg="custom_world" type="point_cloud_to_laser_scan.py" name="point_cloud_to_laser_scan" output="screen">
+        <param name="namespace" value="$(arg namespace)" />
+    </node>
+
+<!-- gmapping for turtlebot 1 -->
+    <!-- <node pkg="gmapping" type="slam_gmapping" name="turtlebot3_slam_gmapping" output="screen">
+      <param name="base_frame" value="$(arg namespace)/base_footprint"/>
+      <param name="odom_frame" value="$(arg namespace)/odom"/>
+      <param name="map_frame"  value="$(arg namespace)/map"/>
+      <remap from="scan" to="/$(arg namespace)/laser_scan"/>
+      <rosparam command="load" file="$(find custom_world)/configuration/gmapping_params.yaml" />
+    </node> -->
+<!-- move base for turtlebot 1 -->
+     <!-- <include file="$(find custom_world)/launch/includes/move_base.launch">
+      <arg name="model" value="$(arg model)" />
+      <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+      <arg name="cmd_vel_topic" value="/$(arg namespace)/cmd_vel"/>
+      <arg name="namespace" value="$(arg namespace)"/>
+    </include> -->
+  </group>
+   
+<node pkg="tf" type="static_transform_publisher" name="map_to_mergedmap_tf_broadcaster"  args="0 0 0 0 0 0 world map 20"/>
+
+
+
+
+</launch>

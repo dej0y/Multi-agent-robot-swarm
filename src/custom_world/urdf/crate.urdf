@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot name="crate">
+  <link name="base_link">
+  <inertial>
+      <mass value="1.0"/> <!-- Set a reasonable mass value -->
+      <origin xyz="0 0 0" rpy="0 0 0"/> <!-- Place the center of mass -->
+      <inertia
+        ixx="0.01" ixy="0" ixz="0"
+        iyy="0.01" iyz="0"
+        izz="0.01"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://custom_world/meshes/crate.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://custom_world/meshes/crate.dae" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Define the bot_id argument with a default value of 1 -->
+    <arg name="bot_id_1" default="1"/>
+    <arg name="bot_id_2" default="2"/>
+
+    <!-- Launch object_detection_node1 for bot_id=1 -->
+    <group>
+        <node name="object_detection_node_1" pkg="custom_world" type="object_detection.py" output="screen">
+            <param name="bot_id" value="$(arg bot_id_1)" />
+        </node>
+    </group>
+
+    <!-- Launch object_detection_node2 for bot_id=2 -->
+    <group>
+        <node name="object_detection_node_2" pkg="custom_world" type="object_detection.py" output="screen">
+            <param name="bot_id" value="$(arg bot_id_2)" />
+        </node>
+    </group>
+</launch>

@@ -1,0 +1,12 @@
+{
+    "map": "./database/map.png",
+    "bots": [
+        {
+            "name": "bot1",
+            "loc_x": -1.326328816627893,
+            "loc_y": -0.43,
+            "loc_z": -0.0
+        }
+    ],
+    "objects": []
+}

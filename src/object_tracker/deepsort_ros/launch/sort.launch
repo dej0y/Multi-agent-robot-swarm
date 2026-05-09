@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="node_name" default="deepsort_ros"/>
+  <arg name="camera_topic" default="/bot1/camera/rgb/image_raw"/>
+  <arg name="detection_topic" default="/yolo_result"/>
+  <arg name="tracker_topic" default="/sort_track_deep"/>
+
+  <node name="$(arg node_name)" pkg="deepsort_ros" type="track.py" output="screen">
+    <param name="camera_topic" value="$(arg camera_topic)"/>
+    <param name="detection_topic" value="$(arg detection_topic)"/>
+    <param name="tracker_topic" value="$(arg tracker_topic)"/>
+  </node>
+</launch>

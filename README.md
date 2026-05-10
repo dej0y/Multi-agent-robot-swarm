@@ -1,113 +1,33 @@
-# Multi-agent-robot-swarm
+<h1 align="center">Multi-agent-robot-swarm</h1>
 
-# Bharatforge Inter-IIT Mid Prep 
-# Centralized Intelligence for Dynamic Swarm Navigation
+<h2 align="center">Centralized Intelligence for Dynamic Swarm Navigation</h2>
 
-Welcome to the **Centralized Intelligence for Dynamic Swarm Navigation** project. This initiative focuses on designing and implementing a centralized control system for navigating dynamic swarms of autonomous robots. The project leverages advanced algorithms for real-time decision-making, robust communication frameworks for efficient data sharing, and dynamic path planning to ensure optimal swarm behavior in complex and uncertain environments. Key features include centralized coordination, adaptive navigation strategies, and real-time obstacle avoidance, enabling seamless operation in dynamic and constrained spaces.
+This project aims on designing a centralized control system for navigating dynamic swarms of autonomous robots. The project explores multi-agent robot swarm coordination using real-time communication, path planning, and navigation strategies. It demonstrates how multiple agents can collaboratively operate in dynamic environments with features like centralized control, adaptive navigation, and obstacle avoidance.
 
-We have provided the following files/folders in the code folder
-- custom_planner_teb - module
-- custom_world - module
-- deepsort_ros -module
-- m-explore module
-- move_models module
-- object_detection module
-- rl_controls module
-- ros_numpy module
-- teb_local_planner - module
-- turtlebot3_description - module
-- turtlebot_ddpg -module
-- ultralytics - module
-- ultralytics_ros - module
-- velodyne_simulator - module
-- yolov8_ros - module
-- requirements.txt
----
-
-## Table of Contents
+## Contents
 
 - [Video Demonstration](#video-demonstration)
-- [Overview](#overview)
-- [System Requirements](#system-requirements)
 - [Installation](#installation)
 - [Running the Simulation](#running-the-simulation)
 - [Launching the UI](#launching-the-ui)
-- [Resolving Errors](#resolving-errors)
 
 ---
 
 ## Video Demonstration
 
-To experience the capabilities of the centralized swarm navigation system, including dynamic path planning, real-time obstacle avoidance, and seamless coordination, explore the video demonstrations available below:
-
 ### [Video 1: Dynamic Swarm Navigation Overview](https://youtu.be/78zE4rJ4cDY)
-A general overview of how the swarm operates, highlighting key features such as centralized control, real-time decision making, and efficient navigation in a dynamic environment.
 
 ### [Video 2: Obstacle Avoidance in Action](https://youtu.be/fuIKSx9zPPc)
-Watch how the robots adapt to real-time obstacles and effectively avoid them using the Timed Elastic Band (TEB) local planner and reinforcement learning-based strategies.
 
 ### [Video 3: Exploration and Path Planning with DDPG](https://youtu.be/MFlaDMs3FBI)
-This video demonstrates the usage of the Accelerated Deep Deterministic Policy Gradient (DDPG) for exploration and path planning under dynamic conditions.
 
 ### [Video 4: DDPG Training](https://youtu.be/fHyaJAUsxMM)
-The DDPG algorithm being trained to optimize decision-making and path planning in dynamic environments.
 
 ### [Video 5: Frontier exploration-based navigation of a swarm of robots in dynamic environment](https://youtu.be/MU8Pb9cezhg)
-The video demonstrates how frontier exploration is used to navigate a swarm of robots through a dynamic environment, enabling efficient exploration and mapping.
 
 ### [Video 6: Frontier exploration-based navigation of a larger swarm of robots in a larger dynamic environment](https://youtu.be/mjY70b-c7WM)
-This video demonstrates a larger swarm of robots utilizing frontier exploration to navigate a more complex, dynamic environment, highlighting scalability and performance in intricate settings.
 
 ### [Video 7: Chatbot Interface with LLM](https://youtu.be/b1DNU8ecjX0)
-The video demonstrates the integration of a chatbot interface powered by a Large Language Model (LLM).
-
----
-
-## Overview
-
-The Centralized Intelligence for Dynamic Swarm Navigation project addresses the challenges of designing a singular brain for robot swarms tasked with performing optimized path planning in highly dynamic environments. This solution emphasizes centralized control, seamless communication, and real-time adaptability, ensuring efficiency and scalability in complex navigation tasks. The key features and modules include:
-
-**custom_planner_teb**: A custom implementation of the Timed Elastic Band (TEB) local planner, which is used for path planning and trajectory optimization, especially for mobile robots in dynamic environments.
-
-**custom_world**: A custom world setup for the robot simulation environment, to simulate various scenarios for testing and training robots.
-
-**deepsort_ros**: An integration of the Deep SORT (Simple Online and Realtime Tracking) algorithm with ROS. It is used for multi-object tracking in real-time, paired with object detection algorithms.
-
-**m-explore**: A module for exploration or path planning, related to exploration in environments, used in autonomous robots for efficient map-building or mission completion.
-
-**move_models**: A module containing scripts for movement of obstacles.
-
-**object_detection**: A module dedicated to detecting objects in the environment, using computer vision techniques to identify and classify objects.
-
-**rl_controls**: Module for reinforcement learning-based control systems, where reinforcement learning is used to optimize the robot's control policies for tasks such as navigation, object manipulation, or decision-making.
-
-**ros_numpy**: A library to bridge between ROS messages and NumPy arrays. This is useful for performing numerical computations on sensor data in ROS.
-
-**teb_local_planner** A ROS package for local path planning. It allows robots to plan and optimize paths in dynamic environments while avoiding obstacles and staying on course.
-
-**turtlebot3_description**: A ROS package that provides the URDF (Unified Robot Description Format) model of the TurtleBot3 robot, including its sensors and actuators, for simulation and visualization.
-
-**turtlebot_ddpg**: A module implementing Accelerated Deep Deterministic Policy Gradient (DDPG) algorithm for obstacle avoidance and exploration under dynamic scenarios.
-
-**ultralytics**: A library for object detection model, used for real-time applications like autonomous navigation and surveillance.
-
-**ultralytics_ros**: A ROS interface for integrating YOLO-based models (YOLOv8) with the ROS ecosystem for real-time object detection, providing a bridge between the object detection system and the robot’s ROS framework.
-
-**velodyne_simulator**: A module for Velodyne LiDAR sensors, used in autonomous vehicles and robots for 3D mapping and obstacle detection.
-
-**yolov8_ros**: A ROS integration for YOLOv8.
-
-**requirements.txt**: File which specifies the dependencies required to run the project.
-
----
-
-## System Requirements
-
-Before you begin, ensure you have the following:
-
-- **Operating System**: Ubuntu 20.04 recommended for a stable build environment.
-- **Processor**: Multi-core processor (Intel i7 or AMD Ryzen 7 and above).
-- **RAM**: 16 GB is recommended for handling complex simulations and concurrent processes.
 
 ---
 
